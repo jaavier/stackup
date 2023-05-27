@@ -14,6 +14,8 @@ contract StackUp {
         string title;
         uint8 reward;
         uint256 numberOfRewards;
+        uint256 totalVotes;
+        mapping(address => bool) hasVoted;
     }
 
     address public admin;
@@ -21,6 +23,20 @@ contract StackUp {
     mapping(uint256 => Quest) public quests;
     mapping(address => mapping(uint256 => playerQuestStatus))
         public playerQuestStatuses;
+
+    modifier questExists(uint256 questId) {
+        require(quests[questId].reward != 0, "Quest does not exist");
+        _;
+    }
+
+    modifier playerJoined(uint256 questId) {
+        require(
+            playerQuestStatuses[msg.sender][questId] ==
+                playerQuestStatus.JOINED,
+            "You have not joined this quest"
+        );
+        _;
+    }
 
     constructor() {
         admin = msg.sender;
@@ -60,8 +76,17 @@ contract StackUp {
         playerQuestStatuses[msg.sender][questId] = playerQuestStatus.SUBMITTED;
     }
 
-    modifier questExists(uint256 questId) {
-        require(quests[questId].reward != 0, "Quest does not exist");
-        _;
+    function voteQuest(uint256 questId)
+        external
+        questExists(questId)
+        playerJoined(questId)
+    {
+        require(
+            !quests[questId].hasVoted[msg.sender],
+            "Player has voted before this quest"
+        );
+        quests[questId].hasVoted[msg.sender] = true;
+        quests[questId].totalVotes++;
     }
+
 }
