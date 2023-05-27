@@ -127,8 +127,10 @@ contract StackUp {
         onlyAdmin
     {
         require(
-            playerQuestStatuses[sender][questId] == playerQuestStatus.SUBMITTED ||
-            playerQuestStatuses[sender][questId] == playerQuestStatus.APPROVED
+            playerQuestStatuses[sender][questId] ==
+                playerQuestStatus.SUBMITTED ||
+                playerQuestStatuses[sender][questId] ==
+                playerQuestStatus.APPROVED
         );
         playerQuestStatuses[sender][questId] = playerQuestStatus.REJECTED;
     }
