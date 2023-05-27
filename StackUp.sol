@@ -6,8 +6,8 @@ contract StackUp {
         NOT_JOINED,
         JOINED,
         SUBMITTED,
-        APPROVED, // Este nuevo estado se utiliza para saber si se puede hacer el withdraw
-        REJECTED // Este nuevo estado se utiliza para hacer saber al usuario que su quest fue rechazada
+        APPROVED, // This new state is used to make sure that the user can only withdraw his reward if the quest was approved
+        REJECTED // This new state is used to let the user know that his submission was rejected
     }
 
     struct Quest {
@@ -16,8 +16,8 @@ contract StackUp {
         string title;
         uint8 reward;
         uint256 numberOfRewards;
-        uint256 totalVotes; // Este nuevo campo se utiliza para saber cuántos votos tiene una quest
-        mapping(address => bool) hasVoted; // Este nuevo mapping se utiliza para saber si un usuario ya votó o no
+        uint256 totalVotes; // This new variable is used to know how many votes the quest has
+        mapping(address => bool) hasVoted; // This new mapping is used to know if the user has voted the quest
     }
 
     address public admin;
@@ -31,7 +31,7 @@ contract StackUp {
         _;
     }
 
-    // Este nuevo modifier se utiliza para saber si el usuario ya se unió a la quest y no hacerlo en las funciones
+    // This new modifier is used to know if the user has already joined the quest and not do it in the functions
     modifier playerJoined(uint256 questId) { 
         require(
             playerQuestStatuses[msg.sender][questId] ==
@@ -41,7 +41,7 @@ contract StackUp {
         _;
     }
 
-    // Este nuevo modifier se utiliza para saber si el usuario es el admin (para approve y reject submission)
+    // This modifier is used to know if the user is the admin (for approve and reject submission)
     modifier onlyAdmin() {
         require(
             msg.sender == admin,
@@ -113,8 +113,8 @@ contract StackUp {
         quests[questId].totalVotes--;
     }
 
-    // Esta función se utiliza para que un admin pueda aprobar o rechazar una quest
-    // Es importante esta función para poder hacer el withdraw posteriormente
+    // This function let an admin approve a quest
+    // This function is important to be able to do the withdraw later
     function approveSubmission(uint256 questId, address sender)
         external
         onlyAdmin
@@ -125,7 +125,7 @@ contract StackUp {
         playerQuestStatuses[sender][questId] = playerQuestStatus.APPROVED;
     }
 
-    // Esta función se utiliza para que un admin pueda rechazar una quest
+    // This function let an admin reject a quest
     function rejectSubmission(uint256 questId, address sender)
         external
         onlyAdmin
@@ -139,7 +139,7 @@ contract StackUp {
         playerQuestStatuses[sender][questId] = playerQuestStatus.REJECTED;
     }
 
-    // Esta función se utiliza para que un usuario pueda hacer el withdraw de su reward si la quest fue aprobada
+    // This function let a user withdraw his reward if the quest was approved
     function withdrawReward(uint256 questId)
         external
         questExists(questId)
