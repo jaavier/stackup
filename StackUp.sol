@@ -134,4 +134,18 @@ contract StackUp {
         );
         playerQuestStatuses[sender][questId] = playerQuestStatus.REJECTED;
     }
+
+    function withdrawReward(uint256 questId)
+        external
+        questExists(questId)
+        playerJoined(questId)
+    {
+        require(
+            playerQuestStatuses[msg.sender][questId] ==
+                playerQuestStatus.APPROVED,
+            "Player cannot claim reward for this quest"
+        );
+        address payable playerAddress = payable(msg.sender);
+        playerAddress.transfer(quests[questId].reward);
+    }
 }
