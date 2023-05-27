@@ -5,7 +5,9 @@ contract StackUp {
     enum playerQuestStatus {
         NOT_JOINED,
         JOINED,
-        SUBMITTED
+        SUBMITTED,
+        APPROVED,
+        REJECTED
     }
 
     struct Quest {
@@ -34,6 +36,14 @@ contract StackUp {
             playerQuestStatuses[msg.sender][questId] ==
                 playerQuestStatus.JOINED,
             "You have not joined this quest"
+        );
+        _;
+    }
+
+    modifier onlyAdmin() {
+        require(
+            msg.sender == admin,
+            "You have to be admin to execute this function"
         );
         _;
     }
@@ -89,4 +99,16 @@ contract StackUp {
         quests[questId].totalVotes++;
     }
 
+    function removeVoteQuest(uint256 questId)
+        external
+        questExists(questId)
+        playerJoined(questId)
+    {
+        require(
+            quests[questId].hasVoted[msg.sender],
+            "Player has not voted this quest"
+        );
+        quests[questId].hasVoted[msg.sender] = false;
+        quests[questId].totalVotes--;
+    }
 }
