@@ -77,12 +77,11 @@ contract StackUp {
         thisQuest.numberOfPlayers++;
     }
 
-    function submitQuest(uint256 questId) external questExists(questId) {
-        require(
-            playerQuestStatuses[msg.sender][questId] ==
-                playerQuestStatus.JOINED,
-            "Player must first join the quest"
-        );
+    function submitQuest(uint256 questId)
+        external
+        questExists(questId)
+        playerJoined(questId)
+    {
         playerQuestStatuses[msg.sender][questId] = playerQuestStatus.SUBMITTED;
     }
 
