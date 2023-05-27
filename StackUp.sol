@@ -111,4 +111,25 @@ contract StackUp {
         quests[questId].hasVoted[msg.sender] = false;
         quests[questId].totalVotes--;
     }
+
+    function approveSubmission(uint256 questId, address sender)
+        external
+        onlyAdmin
+    {
+        require(
+            playerQuestStatuses[sender][questId] == playerQuestStatus.SUBMITTED
+        );
+        playerQuestStatuses[sender][questId] = playerQuestStatus.APPROVED;
+    }
+
+    function rejectSubmission(uint256 questId, address sender)
+        external
+        onlyAdmin
+    {
+        require(
+            playerQuestStatuses[sender][questId] == playerQuestStatus.SUBMITTED ||
+            playerQuestStatuses[sender][questId] == playerQuestStatus.APPROVED
+        );
+        playerQuestStatuses[sender][questId] = playerQuestStatus.REJECTED;
+    }
 }
