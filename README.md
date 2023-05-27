@@ -1,30 +1,30 @@
-# Votar Quest
-Votar Quest: Para este feature tuve que agregar 2 nuevas funciones:
-- Votar por una quest
-- Eliminar voto por una quest
+# Vote Quest
+Vote Quest: For this feature, I had to add 2 new functions:
+- Vote for a quest
+- Remove vote for a quest
 
-## Función `voteQuest`
-- **Descripción**: Esta función permite a los jugadores votar por una quest específica.
-- **Justificación**: La función `voteQuest` se agregó para permitir a los jugadores expresar su opinión y votar por las quests que consideran valiosas o dignas de aprobación. Al mantener un registro de los votos de los jugadores, se puede tener en cuenta la opinión de la comunidad al evaluar la calidad y el interés de una quest. Esto puede ayudar a guiar las decisiones del administrador y a fomentar la participación activa de los jugadores en la selección y aprobación de quests.
+## Function `voteQuest`
+- **Description**: This function allows players to vote for a specific quest.
+- **Justification**: The `voteQuest` function was added to enable players to express their opinions and vote for quests they consider valuable or worthy of approval. By keeping a record of players' votes, the community's opinion can be taken into account when evaluating the quality and interest of a quest. This can help guide the administrator's decisions and encourage active player participation in quest selection and approval.
 
-## Función `removeVoteQuest`
-- **Descripción**: Esta función permite a los jugadores eliminar su voto previamente emitido para una quest.
-- **Justificación**: La función `removeVoteQuest` se implementó para permitir a los jugadores modificar su voto en caso de que cambien de opinión o deseen revocar su voto inicial. Esto brinda flexibilidad y permite a los jugadores ajustar sus preferencias y elecciones en relación con las quests en las que están interesados. Al registrar y actualizar los votos de los jugadores, se mantiene un sistema justo y transparente para la votación de quests.
+## Function `removeVoteQuest`
+- **Description**: This function allows players to remove their previously cast vote for a quest.
+- **Justification**: The `removeVoteQuest` function was implemented to allow players to modify their vote in case they change their minds or wish to revoke their initial vote. This provides flexibility and allows players to adjust their preferences and choices regarding the quests they are interested in. By recording and updating players' votes, a fair and transparent voting system for quests is maintained.
 
+# Withdraw Rewards
+This feature is slightly more complex as it required adding functions for:
+- Approving the quest: This function is vital as it allows the administrator to approve the withdrawal of rewards. A new state called APPROVED was added to the enum.
+- Rejecting the quest: Previously, only the SUBMITTED state existed, so the REJECTED state was also added to enable quest rejection.
+- Withdrawing the rewards: This function allows players to withdraw the rewards from their quest. Rewards can only be withdrawn if the quest's state is APPROVED.
 
-# Retirar Ganancias
-Este feature es un poco más complicado, ya que se tuvieron que agregar funciones para:
-- Aprobar el quest: Esta función es vital, ya que es la que le permite al administrador aprobar el retiro de las ganancias. Se agregó un nuevo estado al enum llamado APPROVED.
-- Rechazar el quest: Anteriormente solo existía el estado SUBMITTED, por lo que también se agregó el estado REJECTED para poder rechazar el quest.
-- Retirar las ganancias: Esta función es la que le permite al jugador retirar las ganancias de su quest. Solo se puede retirar las ganancias si el estado del quest es APPROVED.
-## Función `approveSubmission`
-- **Descripción**: Esta función permite al administrador aprobar una quest enviada por un jugador.
-- **Justificación**: La función `approveSubmission` se creó para brindar al administrador la capacidad de revisar y aprobar las quests enviadas por los jugadores. Al aprobar una quest, el administrador indica que se ha cumplido con éxito y que el jugador puede reclamar el reward correspondiente. Esto asegura que solo las quests válidas y aprobadas sean elegibles para el retiro del reward.
+## Function `approveSubmission`
+- **Description**: This function allows the administrator to approve a quest submitted by a player.
+- **Justification**: The `approveSubmission` function was created to provide the administrator with the ability to review and approve quests submitted by players. By approving a quest, the administrator indicates that it has been successfully fulfilled, and the player can claim the corresponding reward. This ensures that only valid and approved quests are eligible for reward withdrawal.
 
-## Función `rejectSubmission`
-- **Descripción**: Esta función permite al administrador rechazar una quest enviada por un jugador.
-- **Justificación**: La función `rejectSubmission` se implementó para que el administrador pueda rechazar quests que no cumplen con los requisitos o no son válidas. Al rechazar una quest, el administrador informa al jugador que su quest ha sido rechazada y proporciona una razón o explicación adicional si es necesario. Esto ayuda a mantener la integridad y la calidad de las quests aprobadas y asegura que los jugadores reciban feedback sobre las quests rechazadas.
+## Function `rejectSubmission`
+- **Description**: This function allows the administrator to reject a quest submitted by a player.
+- **Justification**: The `rejectSubmission` function was implemented to enable the administrator to reject quests that do not meet the requirements or are not valid. By rejecting a quest, the administrator informs the player that their quest has been rejected and provides a reason or additional explanation if necessary. This helps maintain the integrity and quality of approved quests and ensures that players receive feedback on rejected quests.
 
-## Función `withdrawReward`
-- **Descripción**: Esta función permite a los jugadores hacer el retiro de su reward una vez que la quest ha sido aprobada.
-- **Justificación**: La función `withdrawReward` se diseñó para permitir que los jugadores obtengan su reward después de que su quest ha sido aprobada por el administrador. Al verificar que el estado de la quest sea "APPROVED" para el jugador, se garantiza que solo los jugadores cuyas quests han sido aprobadas puedan retirar su reward. Esto proporciona una forma segura y confiable para que los jugadores obtengan su recompensa por completar las quests.
+## Function `withdrawReward`
+- **Description**: This function allows players to withdraw their rewards once the quest has been approved.
+- **Justification**: The `withdrawReward` function is designed to enable players to obtain their rewards after their quest has been approved by the administrator. By verifying that the quest's state is "APPROVED" for the player, it ensures that only players whose quests have been approved can withdraw their rewards. This provides a secure and reliable way for players to obtain their rewards for completing quests.
